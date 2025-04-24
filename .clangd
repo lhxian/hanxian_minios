@@ -1,0 +1,4 @@
+CompileFlags:
+  Add: 
+    - "-m32"
+    - "-I/home/lhx/code/os/include/"
