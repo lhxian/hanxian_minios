@@ -1,0 +1,49 @@
+
+start.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <start>:
+   0:	8c c8                	mov    %cs,%eax
+   2:	8e d8                	mov    %eax,%ds
+   4:	8e c0                	mov    %eax,%es
+   6:	8e d0                	mov    %eax,%ss
+   8:	fa                   	cli
+   9:	e4 92                	in     $0x92,%al
+   b:	0c 02                	or     $0x2,%al
+   d:	e6 92                	out    %al,$0x92
+   f:	67 66 0f 01 15       	lgdtw  (%di)
+  14:	68 00 00 00 0f       	push   $0xf000000
+  19:	20 c0                	and    %al,%al
+  1b:	0c 01                	or     $0x1,%al
+  1d:	0f 22 c0             	mov    %eax,%cr0
+  20:	66 ea 28 00 00 00    	ljmpw  $0x0,$0x28
+  26:	08 00                	or     %al,(%eax)
+
+00000028 <start32>:
+  28:	66 b8 10 00          	mov    $0x10,%ax
+  2c:	8e d8                	mov    %eax,%ds
+  2e:	8e c0                	mov    %eax,%es
+  30:	8e e0                	mov    %eax,%fs
+  32:	8e d0                	mov    %eax,%ss
+  34:	66 b8 18 00          	mov    $0x18,%ax
+  38:	8e e8                	mov    %eax,%gs
+  3a:	b8 00 00 20 00       	mov    $0x200000,%eax
+  3f:	89 c4                	mov    %eax,%esp
+  41:	e9 fc ff ff ff       	jmp    42 <start32+0x1a>
+  46:	66 90                	xchg   %ax,%ax
+
+00000048 <gdt>:
+	...
+  50:	ff                   	(bad)
+  51:	ff 00                	incl   (%eax)
+  53:	00 00                	add    %al,(%eax)
+  55:	9a cf 00 ff ff 00 00 	lcall  $0x0,$0xffff00cf
+  5c:	00 92 cf 00 ff ff    	add    %dl,-0xff31(%edx)
+  62:	00 80 0b 92 cf 00    	add    %al,0xcf920b(%eax)
+
+00000068 <gdtDesc>:
+  68:	1f                   	pop    %ds
+  69:	00 48 00             	add    %cl,0x0(%eax)
+	...

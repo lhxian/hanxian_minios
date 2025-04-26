@@ -1,9 +1,10 @@
 #include "boot.h"
 #include"kelf.h"
 #include"kint.h"
-#define BEGIN_ADDR 0x100000
-#define MID_MAX_SZ (0x80000)
-#define BUFFER_BEGIN (BEGIN_ADDR + MID_MAX_SZ)
+#define BEGIN_ADDR 0x7e00
+#define MID_MAX_SZ 0x10000
+#define BUFFER_BEGIN 0x20000
+#define META_DATA_ADDR 0x40000
 #define SECTSIZE 512
 #define MID_MAX_SECT_CNT (MID_MAX_SZ/ SECTSIZE)
 static inline void rmemcpy(uint8_t* dst,const uint8_t* src,int sz){
@@ -13,7 +14,7 @@ static inline void rmemset(uint8_t* dst,uint8_t val,int sz){
 	while(sz-- > 0) dst[sz] = val;
 }
 typedef void(*f_entry)();
-void bootMid(void* a){
+void bootMid(){
 	word_t mid_addr = BEGIN_ADDR, buffer_addr = BUFFER_BEGIN;
 	for(int i =0;i<MID_MAX_SECT_CNT;++i){
 		readSect((void*)buffer_addr,i+1);
